@@ -1,27 +1,52 @@
 ;; Main nlogo file
 ;; This is used for all major procedures.
 
+;; Implied globals - global variables set by user through the interface
+; image-size: width/heighth of the world the user wishes to import.
+;             If there was some way to automatically calculate this, I would choose that.
+
 to setup
   clear-all
   reset-ticks
+  ifelse (is-number? image-size) [
+    ;; If image-size is defined, we can use it
+    ;; Sanity check: due to memory constraints, current safe limit is 128.
+    ;; carefully takes 2 command blocks: if the first block runs without producing
+    ;; any errors, nothing else happens and execution continues outside of carefully.
+    ;; If an error occurs, then the second command block is run.
+    carefully [
+      if (image-size > 128 ) [ error "Image size too large" ] ; If image-size is too large, produce error.
+    ][
+      user-message error-message
+      stop ; Make sure to stop execution.
+    ]
+    ;; The resize command expects the max/min values for the world, with
+    ;; a center at (0,0). Coordinates may only be integers, too.
+
+    let max-cor (int image-size / 2)
+    let min-cor (int 0 - image-size / 2) ; Some difficulty defining vars w/ negative numbers.
+    resize-world min-cor max-cor min-cor max-cor ; format: x x y y
+  ][
+    ;; Not much to do if not defined
+    user-message "Please enter an image size"
+  ]
 end
 
 to import-world-image ;; Have to load the world somehow
-  ifelse (file-exists? "test.png" )
-  [ ;; If it does exist, we want to import it into the world.
+  ifelse (file-exists? "test.png" ) [
+    ;; If it does exist, we want to import it into the world.
     import-pcolors-rgb "test.png"
-    user-message "File successfully imported"
-  ]
-  [ ;; If the world image file does not exist, let the user known
+    print "File successfully imported"
+  ] [
+    ;; If the world image file does not exist, let the user known
     user-message "File test.png does not exist"
   ]
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
+305
 10
-647
+742
 448
 -1
 -1
@@ -46,10 +71,10 @@ ticks
 30.0
 
 BUTTON
-10
-20
-82
-53
+170
+15
+242
+48
 Setup
 setup
 NIL
@@ -63,10 +88,10 @@ NIL
 1
 
 BUTTON
-10
-65
-132
-98
+170
+55
+292
+88
 Import image
 import-world-image
 NIL
@@ -78,6 +103,17 @@ NIL
 NIL
 NIL
 1
+
+INPUTBOX
+10
+15
+167
+75
+image-size
+128.0
+1
+0
+Number
 
 @#$#@#$#@
 ## WHAT IS IT?

@@ -14,12 +14,12 @@ to setup
     ;; carefully takes 2 command blocks: if the first block runs without producing
     ;; any errors, nothing else happens and execution continues outside of carefully.
     ;; If an error occurs, then the second command block is run.
-    carefully [
-      if (image-size > 128 ) [ error "Image size too large" ] ; If image-size is too large, produce error.
-    ][
-      user-message error-message
-      stop ; Make sure to stop execution.
-    ]
+;    carefully [
+;      if (image-size > 128 ) [ error "Image size too large" ] ; If image-size is too large, produce error.
+;    ][
+;      user-message error-message
+;      stop ; Make sure to stop execution.
+;    ]
     ;; The resize command expects the max/min values for the world, with
     ;; a center at (0,0). Coordinates may only be integers, too.
 
@@ -33,6 +33,7 @@ to setup
     ;; Note: Documentation states that patch size is typically an integer, but may be floating point.
     ;; We are also setting the patch size before resizing the world, to try to keep any memory
     ;; benefit it may give.
+    ;; TODO: Run following commands based on size change (e.g. big->small, resize then patch size
     set-patch-size (416 / image-size)
     resize-world min-cor max-cor min-cor max-cor ; format: x x y y
   ][
@@ -42,24 +43,25 @@ to setup
 end
 
 to import-world-image ;; Have to load the world somehow
-  ifelse (file-exists? "test.png" ) [
+  let test-image "images/test-640.png"
+  ifelse (file-exists? test-image ) [
     ;; If it does exist, we want to import it into the world.
-    import-pcolors-rgb "test.png"
+    import-pcolors-rgb test-image
     print "File successfully imported"
   ] [
     ;; If the world image file does not exist, let the user known
-    user-message "File test.png does not exist"
+    user-message (word test-image " does not exist")
   ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
 305
 10
-728
-434
+345
+51
 -1
 -1
-3.25
+0.40625
 1
 10
 1
@@ -69,10 +71,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--64
-64
--64
-64
+-16
+16
+-16
+16
 0
 0
 1
@@ -119,7 +121,7 @@ INPUTBOX
 167
 75
 image-size
-128.0
+5120.0
 1
 0
 Number

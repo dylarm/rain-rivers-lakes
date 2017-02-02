@@ -25,6 +25,15 @@ to setup
 
     let max-cor (int image-size / 2)
     let min-cor (int 0 - image-size / 2) ; Some difficulty defining vars w/ negative numbers.
+
+    ;; The default world is 32x32 patches, with each patch being 13 pixels a side.
+    ;; This means that the world is originally 416x416 pixels. So dividing this
+    ;; number by image-size will give the appropriate patch size to keep the world the same
+    ;; size on the screen.
+    ;; Note: Documentation states that patch size is typically an integer, but may be floating point.
+    ;; We are also setting the patch size before resizing the world, to try to keep any memory
+    ;; benefit it may give.
+    set-patch-size (416 / image-size)
     resize-world min-cor max-cor min-cor max-cor ; format: x x y y
   ][
     ;; Not much to do if not defined
@@ -46,11 +55,11 @@ end
 GRAPHICS-WINDOW
 305
 10
-742
-448
+728
+434
 -1
 -1
-13.0
+3.25
 1
 10
 1
@@ -60,10 +69,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--16
-16
--16
-16
+-64
+64
+-64
+64
 0
 0
 1

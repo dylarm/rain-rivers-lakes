@@ -10,19 +10,23 @@ to setup
   reset-ticks
   ifelse (is-number? image-size) [
     ;; If image-size is defined, we can use it
-    ;; Sanity check: due to memory constraints, current safe limit is 128.
+    ;; Sanity check: due to memory constraints, current safe limit is 1024.
     ;; carefully takes 2 command blocks: if the first block runs without producing
     ;; any errors, nothing else happens and execution continues outside of carefully.
     ;; If an error occurs, then the second command block is run.
-;    carefully [
-;      if (image-size > 128 ) [ error "Image size too large" ] ; If image-size is too large, produce error.
-;    ][
-;      user-message error-message
-;      stop ; Make sure to stop execution.
-;    ]
+    carefully [
+      if (image-size > 1024 ) [
+        ;; If image-size is too large, produce error.
+        error "Image size larger than recommended. Memory limits will likely be exceeded."
+      ]
+    ][
+      user-message error-message
+      ;; If the user has changed their configuration to allow for more memory usage from NetLogo,
+      ;; we don't want to halt execution arbitrarily. Let them proceed if they wish, caveat utilitor.
+    ]
+
     ;; The resize command expects the max/min values for the world, with
     ;; a center at (0,0). Coordinates may only be integers, too.
-
     let max-cor (int image-size / 2)
     let min-cor (int 0 - image-size / 2) ; Some difficulty defining vars w/ negative numbers.
 
@@ -63,8 +67,8 @@ end
 GRAPHICS-WINDOW
 305
 10
-723
-429
+720
+426
 -1
 -1
 0.40625

@@ -4,6 +4,8 @@
 ;; Implied globals - global variables set by user through the interface
 ; image-size: width/heighth of the world the user wishes to import.
 ;             If there was some way to automatically calculate this, I would choose that.
+; image-path: either relative or absolute path to image. Whether spaces are allowed are unknown,
+;             so they probably should be avoided.
 
 to setup
   clear-all
@@ -67,11 +69,11 @@ end
 GRAPHICS-WINDOW
 305
 10
-720
-426
+719
+425
 -1
 -1
-0.40625
+0.65
 1
 10
 1
@@ -81,10 +83,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--512
-512
--512
-512
+-320
+320
+-320
+320
 0
 0
 1
@@ -131,7 +133,7 @@ INPUTBOX
 80
 75
 image-size
-1024.0
+640.0
 1
 0
 Number

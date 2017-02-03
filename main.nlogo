@@ -136,6 +136,23 @@ image-size
 0
 Number
 
+BUTTON
+245
+15
+300
+48
+cp
+cp
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 @#$#@#$#@
 ## WHAT IS IT?
 

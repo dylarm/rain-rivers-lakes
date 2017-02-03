@@ -34,8 +34,14 @@ to setup
     ;; We are also setting the patch size before resizing the world, to try to keep any memory
     ;; benefit it may give.
     ;; TODO: Run following commands based on size change (e.g. big->small, resize then patch size
-    set-patch-size (416 / image-size)
-    resize-world min-cor max-cor min-cor max-cor ; format: x x y y
+    if (world-width < image-size) [
+      set-patch-size (416 / image-size)
+      resize-world min-cor max-cor min-cor max-cor ; format: x x y y
+    ]
+    if (world-width > image-size) [
+      resize-world min-cor max-cor min-cor max-cor
+      set-patch-size (416 / image-size)
+    ]
   ][
     ;; Not much to do if not defined
     user-message "Please enter an image size"
@@ -57,8 +63,8 @@ end
 GRAPHICS-WINDOW
 305
 10
-345
-51
+723
+429
 -1
 -1
 0.40625
@@ -71,10 +77,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--16
-16
--16
-16
+-512
+512
+-512
+512
 0
 0
 1
@@ -121,7 +127,7 @@ INPUTBOX
 167
 75
 image-size
-5120.0
+1024.0
 1
 0
 Number

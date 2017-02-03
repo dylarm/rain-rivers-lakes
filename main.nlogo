@@ -6,6 +6,10 @@
 ;             If there was some way to automatically calculate this, I would choose that.
 ; image-path: either relative or absolute path to image. Whether spaces are allowed are unknown,
 ;             so they probably should be avoided.
+; max-elevation: Maximum elevation for any patch. This will correspond to a brightness value of 255,
+;             while 0 will correspond to 0 height.
+
+patches-own [elevation]
 
 to setup
   clear-all
@@ -64,13 +68,23 @@ to import-world-image ;; Have to load the world somehow
     ;; If the world image file does not exist, let the user known
     user-message (word image-path " does not exist")
   ]
+
+  ;; As we want the lightness of the patch to correspond to the elevation, we need
+  ;; to convert the RGB color values to a "brightness" via averaging the values.
+  ;; User should supply the maximum elevation, in whatever units they wish.
+  ask patches [
+    let x (mean pcolor)
+    set elevation (max-elevation * (x / 255))
+  ]
 end
+
+;------------------------------------------------------------------------------|
 @#$#@#$#@
 GRAPHICS-WINDOW
 305
 10
-719
-425
+946
+660
 -1
 -1
 0.65
@@ -111,10 +125,10 @@ NIL
 1
 
 BUTTON
-10
-160
-132
-193
+120
+165
+242
+198
 Import image
 import-world-image
 NIL
@@ -165,6 +179,17 @@ images/test-640.png
 1
 0
 String
+
+INPUTBOX
+10
+155
+90
+215
+max-elevation
+100.0
+1
+0
+Number
 
 @#$#@#$#@
 ## WHAT IS IT?

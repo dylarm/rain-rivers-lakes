@@ -53,14 +53,14 @@ to setup
 end
 
 to import-world-image ;; Have to load the world somehow
-  let test-image "images/test-5120.png"
-  ifelse (file-exists? test-image ) [
+  ;; First check if file exists
+  ifelse (file-exists? image-path ) [
     ;; If it does exist, we want to import it into the world.
-    import-pcolors-rgb test-image
-    print (word "File successfully imported at " date-and-time)
+    import-pcolors-rgb image-path
+    print (word image-path " successfully imported at " date-and-time)
   ] [
     ;; If the world image file does not exist, let the user known
-    user-message (word test-image " does not exist")
+    user-message (word image-path " does not exist")
   ]
 end
 @#$#@#$#@
@@ -92,10 +92,10 @@ ticks
 30.0
 
 BUTTON
-170
-15
-242
-48
+85
+30
+157
+63
 Setup
 setup
 NIL
@@ -109,10 +109,10 @@ NIL
 1
 
 BUTTON
-170
-55
-292
-88
+10
+160
+132
+193
 Import image
 import-world-image
 NIL
@@ -128,7 +128,7 @@ NIL
 INPUTBOX
 10
 15
-167
+80
 75
 image-size
 1024.0
@@ -137,11 +137,11 @@ image-size
 Number
 
 BUTTON
-245
-15
-300
-48
-cp
+165
+30
+272
+63
+Clear Patches
 cp
 NIL
 1
@@ -152,6 +152,17 @@ NIL
 NIL
 NIL
 1
+
+INPUTBOX
+10
+90
+285
+150
+image-path
+images/test-640.png
+1
+0
+String
 
 @#$#@#$#@
 ## WHAT IS IT?

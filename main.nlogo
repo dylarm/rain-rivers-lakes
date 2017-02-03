@@ -11,9 +11,17 @@
 
 patches-own [elevation]
 
+globals [max-elevation]
+
+
+
 to setup
   clear-all
   reset-ticks
+
+  ;; Define explicit globals
+  set max-elevation 100
+
   ifelse (is-number? image-size) [
     ;; If image-size is defined, we can use it
     ;; Sanity check: due to memory constraints, current safe limit is 1024.
@@ -101,8 +109,8 @@ GRAPHICS-WINDOW
 320
 -320
 320
-0
-0
+1
+1
 1
 ticks
 30.0
@@ -125,10 +133,10 @@ NIL
 1
 
 BUTTON
-120
-165
-242
-198
+10
+155
+132
+188
 Import image
 import-world-image
 NIL
@@ -179,17 +187,6 @@ images/test-640.png
 1
 0
 String
-
-INPUTBOX
-10
-155
-90
-215
-max-elevation
-100.0
-1
-0
-Number
 
 @#$#@#$#@
 ## WHAT IS IT?

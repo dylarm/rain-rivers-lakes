@@ -49,11 +49,11 @@ to setup
 end
 
 to import-world-image ;; Have to load the world somehow
-  let test-image "images/test-640.png"
+  let test-image "images/test-5120.png"
   ifelse (file-exists? test-image ) [
     ;; If it does exist, we want to import it into the world.
     import-pcolors-rgb test-image
-    print "File successfully imported"
+    print (word "File successfully imported at " date-and-time)
   ] [
     ;; If the world image file does not exist, let the user known
     user-message (word test-image " does not exist")
